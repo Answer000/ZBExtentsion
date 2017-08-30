@@ -15,7 +15,10 @@ extension UIImage {
     /// - parameter fillColor: 填充颜色
     /// - parameter finished:  绘制完成后闭包返回新图片
     
-     func imageClipWithCorner(radius: CGFloat, fillSize: CGSize, fillColor: UIColor, finished:@escaping (_ newImage: UIImage)->()) {
+    public func imageClipWithCorner(radius: CGFloat,
+                                    fillSize: CGSize,
+                                    fillColor: UIColor,
+                                    finished:@escaping (_ newImage: UIImage)->()) {
         /****** 异步裁切图片 *******/
         DispatchQueue.global().async {
             /****** 开启上下文 *******/
@@ -51,8 +54,13 @@ extension UIImage {
     /// - parameter fillColor: 填充颜色
     /// - parameter finished:  绘制完成后闭包返回新图片
     
-    func imageClipWtihOval(fillSize: CGSize, fillColor: UIColor, finished:@escaping (_ newImage: UIImage)->()) {
-        self.imageClipWithCorner(radius: min(fillSize.width, fillSize.height), fillSize: fillSize, fillColor: fillColor, finished: finished)
+    public func imageClipWtihOval(fillSize: CGSize,
+                           fillColor: UIColor,
+                           finished:@escaping (_ newImage: UIImage)->()) {
+        imageClipWithCorner(radius: min(fillSize.width, fillSize.height),
+                            fillSize: fillSize,
+                            fillColor: fillColor,
+                            finished: finished)
     }
 }
 

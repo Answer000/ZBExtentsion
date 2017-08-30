@@ -107,38 +107,31 @@ extension UIView{
 
 
 extension UIView {
-    func clearSubview() {
+    public func removeAllFromSuperview() {
         for v in subviews {
             v.removeFromSuperview()
         }
     }
     
-    func setLayerBorder() {
-        self.layer.borderColor = UIColor.hexColorWith(hexVale: 0xe6e6e6).cgColor
-        self.layer.borderWidth = 1
-    }
-    
-    func viewController_self() -> UIViewController?{
-        var responder:UIResponder? = self.next
+    public func viewController_self() -> UIViewController?{
+        var responder : UIResponder? = self
         while responder != nil {
             if (responder?.isKind(of: UIViewController.self)) == true {
-                let con = responder as? UIViewController
-                return con
-            }else {
-                responder = responder?.next
+                return responder as? UIViewController
             }
+            responder = responder?.next
         }
         return nil
     }
     
     public func tableView_self() -> UITableView? {
-        var subview : UIView = self
-        while !subview.isKind(of: UITableView.self) {
-            guard let subSuperview = subview.superview else {
-                return nil
+        var responder : UIResponder? = self
+        while responder != nil {
+            if (responder?.isKind(of: UITableView.self)) == true {
+                return responder as? UITableView
             }
-            subview = subSuperview
+            responder = responder?.next
         }
-        return subview as? UITableView
+        return nil
     }
 }
