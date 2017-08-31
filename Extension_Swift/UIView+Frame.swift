@@ -7,102 +7,104 @@
 import UIKit
 
 extension UIView{
-    public var x: CGFloat{
-        get{
-            return self.frame.origin.x
-        }
-        set{
-            var r = self.frame
-            r.origin.x = newValue
-            self.frame = r
-        }
+    
+    @discardableResult
+    public func x(_ offset: CGFloat) -> UIView {
+        var r = self.frame
+        r.origin.x = offset
+        self.frame = r
+        return self
     }
-    public var y: CGFloat{
-        get{
-            return self.frame.origin.y
-        }
-        set{
-            var r = self.frame
-            r.origin.y = newValue
-            self.frame = r
-        }
+    public func x() -> CGFloat {
+        return self.frame.origin.x
     }
+    
+    
+    @discardableResult
+    public func y(_ offset: CGFloat) -> UIView {
+        var r = self.frame
+        r.origin.y = offset
+        self.frame = r
+        return self
+    }
+    public func y() -> CGFloat {
+        return self.frame.origin.y
+    }
+    
+    
     /// 右边界的x值
-    public var rightX: CGFloat{
-        get{
-            return self.x + self.width
-        }
-        set{
-            var r = self.frame
-            r.origin.x = newValue - frame.size.width
-            self.frame = r
-        }
+    public func right() -> CGFloat {
+        return self.x() + self.width()
     }
+    
+    
     /// 下边界的y值
-    public var bottomY: CGFloat{
-        get{
-            return self.y + self.height
-        }
-        set{
-            var r = self.frame
-            r.origin.y = newValue - frame.size.height
-            self.frame = r
-        }
+    public func bottom() -> CGFloat {
+        return self.y() + self.height()
     }
-    public var centerX : CGFloat{
-        get{
-            return self.center.x
-        }
-        set{
-            self.center = CGPoint(x: newValue, y: self.center.y)
-        }
+    
+    
+    @discardableResult
+    public func centerX(_ offset: CGFloat) -> UIView {
+        self.center = CGPoint.init(x: offset, y: self.centerY())
+        return self
     }
-    public var centerY : CGFloat{
-        get{
-            return self.center.y
-        }
-        set{
-            self.center = CGPoint(x: self.center.x, y: newValue)
-        }
+    public func centerX() -> CGFloat {
+        return self.center.x
     }
-    public var width: CGFloat{
-        get{
-            return self.frame.size.width
-        }
-        set{
-            var r = self.frame
-            r.size.width = newValue
-            self.frame = r
-        }
+    
+    
+    @discardableResult
+    public func centerY(_ offset: CGFloat) -> UIView {
+        self.center = CGPoint.init(x: self.centerX(), y: offset)
+        return self
     }
-    public var height: CGFloat{
-        get{
-            return self.frame.size.height
-        }
-        set{
-            var r = self.frame
-            r.size.height = newValue
-            self.frame = r
-        }
+    public func centerY() -> CGFloat {
+        return self.center.y
     }
-    public var origin: CGPoint{
-        get{
-            return self.frame.origin
-        }
-        set{
-            self.x = newValue.x
-            self.y = newValue.y
-        }
+    
+    
+    @discardableResult
+    public func width(_ offset: CGFloat) -> UIView {
+        var r = self.frame
+        r.size.width = offset
+        self.frame = r
+        return self
     }
-    public var size: CGSize{
-        get{
-            return self.frame.size
-        }
-        set{
-            self.width = newValue.width
-            self.height = newValue.height
-        }
+    public func width() -> CGFloat {
+        return self.frame.size.width
     }
+    
+    
+    @discardableResult
+    public func height(_ offset: CGFloat) -> UIView {
+        var r = self.frame
+        r.size.height = offset
+        self.frame = r
+        return self
+    }
+    public func height() -> CGFloat {
+        return self.frame.size.height
+    }
+    
+    
+    @discardableResult
+    public func origin(_ point: CGPoint) -> UIView {
+        return self.x(point.x).y(point.y)
+    }
+    public func origin() -> CGPoint {
+        return self.frame.origin
+    }
+    
+    
+    @discardableResult
+    public func size(_ size: CGSize) -> UIView {
+        return self.width(size.width).height(size.height)
+    }
+    public func size() -> CGSize {
+        return self.frame.size
+    }
+    
 }
 
 
@@ -129,6 +131,20 @@ extension UIView {
         while responder != nil {
             if (responder?.isKind(of: UITableView.self)) == true {
                 return responder as? UITableView
+            }
+            responder = responder?.next
+        }
+        return nil
+    }
+    
+    public func getResponder_super(responderClass: Swift.AnyClass?) -> AnyObject? {
+        guard let responderClass = responderClass else {
+            return nil
+        }
+        var responder : UIResponder? = self
+        while responder != nil {
+            if (responder?.isKind(of: responderClass.self)) == true {
+                return responder.self
             }
             responder = responder?.next
         }
