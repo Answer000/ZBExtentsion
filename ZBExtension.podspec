@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name         = 'ZBExtension'
-   s.version      = '0.0.2'
+   s.version      = '0.0.3'
    s.license      = { :type => "MIT", :file => "LICENSE" } 
    s.homepage     = 'https://github.com/AnswerXu/ZBExtentsion.git'
    s.author       = { "AnswerXu" => "zhengbo073017@163.com" }
