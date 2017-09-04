@@ -71,12 +71,6 @@ extension UILabel {
     }
     
     @discardableResult
-    public func isUserInteractionEnabled(_ enabled: Bool) -> Self {
-        self.isUserInteractionEnabled = enabled
-        return self
-    }
-    
-    @discardableResult
     public func isEnabled(_ enabled: Bool) -> Self {
         self.isEnabled = enabled
         return self
