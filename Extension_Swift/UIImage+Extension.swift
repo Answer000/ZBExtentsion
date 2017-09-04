@@ -55,8 +55,8 @@ extension UIImage {
     /// - parameter finished:  绘制完成后闭包返回新图片
     
     public func imageClipWtihOval(fillSize: CGSize,
-                           fillColor: UIColor,
-                           finished:@escaping (_ newImage: UIImage)->()) {
+                                  fillColor: UIColor,
+                                  finished:@escaping (_ newImage: UIImage)->()) {
         imageClipWithCorner(radius: min(fillSize.width, fillSize.height),
                             fillSize: fillSize,
                             fillColor: fillColor,
